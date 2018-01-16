@@ -1,4 +1,4 @@
-FROM sumdoc/texlive-2017
+FROM adinriv/docker-texlive
 
 # we additionally need latexmk, python, java (because of pax), perl (because of pax), pdftk, ghostscript, and unzip (because of pax)
 RUN apt-get update -qq && apt-get upgrade -qq && \
@@ -8,6 +8,9 @@ RUN apt-get update -qq && apt-get upgrade -qq && \
 
 # update texlive
 RUN tlmgr update --self --all --reinstall-forcibly-removed
+
+# Add additional packages
+RUN tlmgr install collection-german
 
 # Prepare usage of pax
 RUN mkdir /root/.texlive2017 && perl `kpsewhich -var-value TEXMFDIST`/scripts/pax/pdfannotextractor.pl --install
