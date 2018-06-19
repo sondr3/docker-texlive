@@ -10,8 +10,15 @@ ENV INITRD No
 
 ARG BUILD_DATE
 
+RUN apt-get update -qq && apt-get install -y --install-recommends dirmngr
+
+RUN apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
+RUN apt-key adv --recv-key --keyserver keyserver.ubuntu.com 7638D0442B90D010
+RUN apt-key adv --recv-key --keyserver keyserver.ubuntu.com 04EE7237B7D453EC
+
 COPY src/etc/apt/preferences.d/artful /etc/apt/preferences.d/
 COPY src/etc/apt/sources.list.d/bionic.list /etc/apt/sources.list.d/
+COPY src/etc/apt/sources.list.d/sid.list /etc/apt/sources.list.d/
 
 # we additionally need python, java (because of pax), perl (because of pax), pdftk, ghostscript, and unzip (because of pax)
 RUN apt-get update -qq && apt-get upgrade -qq && \
@@ -35,6 +42,8 @@ RUN apt-get update -qq && apt-get upgrade -qq && \
     apt-get install -y fontconfig && \
     # required by tlmgr init-usertree
     apt-get install -y xzdec && \
+    # install pandoc from debian/sid to get latest version
+    apt-get install -y -t sid pandoc && \
     # save some space
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
@@ -62,10 +71,6 @@ WORKDIR /home
 # pandoc in the repositories is 1.x, but there is 2.x released, which changed command line parameters.
 # To enable release.sh working also in CircleCI, we use a recent pandoc version there, too.
 RUN wget https://github.com/jgm/pandoc/releases/download/2.1.3/pandoc-2.1.3-1-amd64.deb -q --output-document=/home/pandoc.deb && dpkg -i pandoc.deb && rm pandoc.deb
-
-# get PlantUML in place
-RUN wget https://netix.dl.sourceforge.net/project/plantuml/1.2018.2/plantuml.1.2018.2.jar -q --output-document=/home/plantuml.jar
-ENV PLANTUML_JAR=/home/plantuml.jar
 
 # install Ruby's bundler
 RUN gem install bundler
