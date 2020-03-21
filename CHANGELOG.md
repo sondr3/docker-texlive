@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Personal fork
+
+### Removed
+
+- Removed all packages _I_ personally don't care about nor need.
+
 ## [Unreleased]
 
 ### Added
@@ -100,7 +106,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
-[Unreleased]: https://github.com/koppor/docker-texlive/compare/v1.6.0...HEAD
+[unreleased]: https://github.com/koppor/docker-texlive/compare/v1.6.0...HEAD
 [v1.6.0]: https://github.com/koppor/docker-texlive/compare/v1.5.1...v1.6.0
 [v1.5.0]: https://github.com/koppor/docker-texlive/compare/v1.4.1...v1.5.0
 [v1.4.1]: https://github.com/koppor/docker-texlive/compare/v1.4.0...v1.4.1
